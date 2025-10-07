@@ -34,24 +34,24 @@ A imagem abaixo ilustra o fluxo de dados e a interação entre os serviços da A
 ```mermaid
 graph TD
     subgraph "Campo / Fazenda"
-        A[<fa:fa-helicopter> Drone]
+        A[Drone]
     end
 
     subgraph "Nuvem AWS"
-        B[<fa:fa-archive> Bucket S3<br>Dados Brutos]
-        C[<fa:fa-bolt> AWS Lambda<br>Pré-processamento]
-        D[<fa:fa-archive> Bucket S3<br>Análise Pendente]
-        E[<fa:fa-server> Instância EC2<br>Análise de Imagens (NDVI)]
-        F[<fa:fa-hdd> Volume EBS<br>Software/Cache]
-        G[<fa:fa-database> Banco de Dados<br>Resultados (RDS)]
-        H[<fa:fa-chart-line> Dashboard<br>Consultor Agrícola]
+        B[Bucket S3<br>Dados Brutos]
+        C[AWS Lambda<br>Pré-processamento]
+        D[Bucket S3<br>Análise Pendente]
+        E[Instância EC2<br>Análise de Imagens NDVI]
+        F[Volume EBS<br>Software/Cache]
+        G[Banco de Dados<br>Resultados RDS]
+        H[Dashboard<br>Consultor Agrícola]
     end
 
     A -- "1. Upload de imagens.zip" --> B
     B -- "2. Trigger de Evento" --> C
     C -- "Valida e move imagens" --> D
     D -- "3. Inicia processamento" --> E
-    E <--> F
+    E -- "Anexado para software/cache" --- F
     E -- "4. Grava resultados" --> G
     G -- "5. Alimenta visualizações" --> H
 
@@ -68,11 +68,5 @@ graph TD
   * **[Amazon EC2 (Elastic Compute Cloud)](https://aws.amazon.com/pt/ec2/)**: Servidor virtual utilizado para a computação pesada e de longa duração. É aqui que os algoritmos de visão computacional são executados.
   * **[Amazon EBS (Elastic Block Store)](https://aws.amazon.com/pt/ebs/)**: Fornece um volume de armazenamento em bloco de alta performance, anexado à instância EC2, para persistir o software de análise, bibliotecas e dados temporários.
 
-## 🚀 Como Usar
 
-Para clonar este repositório e visualizar os arquivos:
-
-```bash
-git clone https://github.com/SEU-USUARIO/SEU-REPOSITORIO.git
-```
 
